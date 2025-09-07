@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<idea-plugin>
+    <id>com.jetbrains.vercel</id>
+    <name>Vercel Deployments</name>
+    <version>1.0.0</version>
+    <vendor email="support@jetbrains.com" url="https://jetbrains.com">JetBrains</vendor>
+
+    <description><![CDATA[
+    View and manage your Vercel project deployments directly from IntelliJ IDEA.
+
+    Features:
+    - View all your Vercel projects and their deployments
+    - Quick access to deployment URLs
+    - Real-time deployment status monitoring
+    - Easy configuration with Vercel API tokens
+    ]]></description>
+
+    <change-notes><![CDATA[
+    <b>Version 1.0.0</b>
+    <ul>
+        <li>Initial release</li>
+        <li>Basic deployment viewing functionality</li>
+        <li>Vercel API integration</li>
+    </ul>
+    ]]></change-notes>
+
+    <!-- Plugin compatibility -->
+    <idea-version since-build="203"/>
+
+    <!-- Plugin dependencies -->
+    <depends>com.intellij.modules.platform</depends>
+    <depends>com.intellij.modules.lang</depends>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <!-- Tool Window -->
+        <toolWindow id="Vercel Deployments"
+                   factoryClass="com.jetbrains.vercel.ui.VercelToolWindowFactory"
+                   anchor="right"
+                   icon="/icons/vercel-13x13.svg"/>
+
+        <!-- Settings -->
+        <projectConfigurable parentId="tools"
+                           instance="com.jetbrains.vercel.settings.VercelSettingsConfigurable"
+                           id="com.jetbrains.vercel.settings"
+                           displayName="Vercel"/>
+
+        <!-- Application Service -->
+        <applicationService serviceImplementation="com.jetbrains.vercel.services.VercelApiService"/>
+
+        <!-- Project Service -->
+        <projectService serviceImplementation="com.jetbrains.vercel.services.VercelProjectService"/>
+    </extensions>
+
+    <applicationListeners>
+        <listener class="com.jetbrains.vercel.listeners.VercelProjectListener"
+                 topic="com.intellij.openapi.project.ProjectManagerListener"/>
+    </applicationListeners>
+
+    <actions>
+        <group id="VercelActions" text="Vercel" popup="true">
+            <action id="RefreshDeployments"
+                   class="com.jetbrains.vercel.actions.RefreshDeploymentsAction"
+                   text="Refresh Deployments"
+                   description="Refresh Vercel deployments"/>
+            <action id="OpenVercelDashboard"
+                   class="com.jetbrains.vercel.actions.OpenVercelDashboardAction"
+                   text="Open Vercel Dashboard"
+                   description="Open Vercel dashboard in browser"/>
+        </group>
+    </actions>
+</idea-plugin>

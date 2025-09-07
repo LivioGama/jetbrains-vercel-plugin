@@ -1,0 +1,13 @@
+{
+  "name": "jetbrains-vercel-plugin",
+  "version": "1.0.0",
+  "description": "Vercel Deployments Plugin for IntelliJ IDEA",
+  "main": "hot-reload.js",
+  "scripts": {
+    "hot-reload": "node hot-reload.js"
+  },
+  "dependencies": {
+    "inquirer": "^9.2.12"
+  }
+}
+
